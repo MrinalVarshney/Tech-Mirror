@@ -40,9 +40,6 @@ app.get("/ebook", (req, res) => {
 app.get("/signup", (req, res) => {
   res.render("signup");
 });
-app.get("/chat", (req,res)=>{
-  res.render("chatPage")
-})
 let db = mongoose.connection; // this db is not working. Enter your db here
 db.once("open", () => {
   console.log("successfully connected");
