@@ -1,24 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Signup</title>
- <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="./css/styles.css">
 </head>
+
 <body class="signup">
- <div class="signup-form">
-   <h1 class="newsquora">SignUp to News Quora!</h1>
-   <form action="/signup" method="POST" id="singup-form">
-     <input type="firstname" class="input-box" name="name" placeholder=" Name" required>
-     <input type="email" class="input-box" name="email" placeholder="Email" required>
-     <input type="password" class="input-box" name="password" placeholder="password" id = "password"required value="">
-     <span id="password-span"></span>
-     <button type="submit" class="signup-btn" id="signup-btn">SignUp</button>
-     <span id="btn-span"></span>
-   </form>
- </div>
- <script src="./js/signup.js"></script>
+  <div class="signup-form">
+    <h1 class="newsquora">SignUp to News Quora!</h1>
+    <form action="/signup" method="POST" id="singup-form">
+      <input type="firstname" class="input-box" name="name" placeholder=" Name" required>
+      <input type="email" class="input-box" name="email" placeholder="Email" required>
+      <select id="techStack" name="tech_stack" class="input-select" required>
+        <option value="">Select Tech Stack</option>
+        <option value="Java">Java</option>
+        <option value="JavaScript">JavaScript</option>
+        <option value="C++">C++</option>
+        <option value="python">python</option>
+        <option value="Golang">Golang</option>
+      </select>
+      <select id="purpose" name="purpose" class="input-select" required>
+        <option value="">Select Purpose</option>
+        <option value="Student">Student</option>
+        <option value="Professional">Professional</option>
+        <option value="Amateur">Amateur</option>
+
+      </select>
+
+      <input type="password" class="input-box" name="password" placeholder="password" id="password" required value="">
+      <span id="password-span"></span>
+      <button type="submit" class="signup-btn" id="signup-btn">SignUp</button>
+      <span id="btn-span"></span>
+    </form>
+  </div>
+  <script src="./js/signup.js"></script>
 </body>
+
 </html>

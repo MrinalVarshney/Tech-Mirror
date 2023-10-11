@@ -53,9 +53,13 @@ app.get("/signup_success", (req, res) => {
 app.post("/signup", (req, res) => {
   var name = req.body.name;
   var email = req.body.email;
+  var tech_stack=req.body.tech_stack;
+  var purpose=req.body.purpose;
   var data = {
     name: name,
     email: email,
+    tech_stack:tech_stack,
+    purpose:purpose
   };
   console.log("database");
   connection.collection("users").insertOne(data, (err, collection) => {
