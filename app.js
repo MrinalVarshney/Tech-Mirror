@@ -10,6 +10,7 @@ const app = express();
 app.use(bodyparser.json());
 const port = 5000;
 const path = require("path");
+const User = require("./Modals/userSchema");
 //serving static files
 app.use(express.static("public")); //to use public folder
 app.set("views", "./views");
@@ -20,10 +21,11 @@ app.use(logger("dev"));
 const homeRouter = require("./routes/homeroute");
 const newsRouter = require("./routes/newsroute");
 const chatRouter = require("./routes/chatRoutes");
+const { connect } = require("http2");
 
 app.use("/", homeRouter);
 app.use("/article", newsRouter);
-app.use("/chat",chatRouter)
+app.use("/chat", chatRouter);
 
 app.get("/audio", (req, res) => {
   res.render("audio");
@@ -40,36 +42,54 @@ app.get("/ebook", (req, res) => {
 app.get("/signup", (req, res) => {
   res.render("signup");
 });
-let db = mongoose.connection; // this db is not working. Enter your db here
-db.once("open", () => {
-  console.log("successfully connected");
-});
-db.on("err", () => {
-  console.log("error in connecting to database");
-});
+// let db = mongoose.connection; // this db is not working. Enter your db here
+// db.once("open", () => {
+//   console.log("successfully connected");
+// });
+// db.on("err", () => {
+//   console.log("error in connecting to database");
+// });
+let connection;
+
+const connectDB = async () => {
+  try {
+    connection = await mongoose.connect(
+      "<MONGO_URL>",
+      {
+        useNewUrlParser: true,
+      }
+    );
+    console.log("MongoDB connected: " + connection.connection.host);
+  } catch (err) {
+    console.log("Error: " + err.message);
+    process.exit();
+  }
+};
+connectDB();
 app.get("/signup_success", (req, res) => {
   res.render("signup_success");
 });
 app.post("/signup", (req, res) => {
+  console.log("Hii");
   var name = req.body.name;
   var email = req.body.email;
-  var tech_stack=req.body.tech_stack;
-  var purpose=req.body.purpose;
-  var data = {
+  var tech_stack = req.body.tech_stack;
+  var purpose = req.body.purpose;
+  const newUser = new User({
     name: name,
     email: email,
-    tech_stack:tech_stack,
-    purpose:purpose
-  };
+    tech_stack: tech_stack,
+    purpose: purpose,
+  });
   console.log("database");
-  connection.collection("users").insertOne(data, (err, collection) => {
+  newUser.save((err, user) => {
     if (err) {
-      console.log(err.messsage);
+      console.log(err);
     } else {
-      console.log("Successfully saved to database");
-      sendmail(email, "You have successfully logged in.");
+      console.log("user saved");
+      sendmail(email, "You have successfully signed up at Tech mirror");
+      res.redirect("/signup_success");
     }
-    res.render("signup_success");
   });
 });
 
